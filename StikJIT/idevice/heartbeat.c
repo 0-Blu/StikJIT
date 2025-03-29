@@ -19,12 +19,11 @@ void startHeartbeat(IdevicePairingFile* pairing_file, TcpProviderHandle** provid
     struct sockaddr_in addr;
     memset(&addr, 0, sizeof(addr));
     addr.sin_family = AF_INET;
-    addr.sin_port = htons(LOCKDOWN_PORT);
     if (inet_pton(AF_INET, "10.7.0.1", &addr.sin_addr) <= 0) {
         logger("DEBUG: Error converting IP address.");
         return;
     }
-    logger("DEBUG: Socket address created for IP 10.7.0.1 on port %d.", LOCKDOWN_PORT);
+    logger("DEBUG: Socket address created for IP 10.7.0.1");
     
     IdeviceErrorCode err = IdeviceSuccess;
     
@@ -38,7 +37,7 @@ void startHeartbeat(IdevicePairingFile* pairing_file, TcpProviderHandle** provid
     }
     logger("DEBUG: TCP provider created successfully.");
     
-    logger("DEBUG: Connecting to installation proxy...");
+    logger("DEBUG: Connecting to heartbeat...");
     HeartbeatClientHandle *client = NULL;
     err = heartbeat_connect_tcp(*provider, &client);
     if (err != IdeviceSuccess) {
@@ -46,7 +45,7 @@ void startHeartbeat(IdevicePairingFile* pairing_file, TcpProviderHandle** provid
         logger("DEBUG: Failed to connect to installation proxy: %d", err);
         return;
     }
-    logger("DEBUG: Connected to installation proxy successfully.");
+    logger("DEBUG: Connected to heartbeat successfully.");
     
     completion(0, "Heartbeat Completed");
     
