@@ -419,6 +419,7 @@ func startHeartbeatInBackground() {
                     showAlert(
                         title: "Heartbeat Error",
                         message: "Failed to connect to Heartbeat (\(result))",
+                        solutionText: "Create a new pairing file",
                         showOk: false,
                         showTryAgain: true
                     ) { shouldTryAgain in
@@ -496,7 +497,7 @@ struct LoadingView: View {
     }
 }
 
-public func showAlert(title: String, message: String, showOk: Bool, showTryAgain: Bool = false, completion: @escaping (Bool) -> Void) {
+public func showAlert(title: String, message: String, solutionText: String? = nil, showOk: Bool, showTryAgain: Bool = false, completion: @escaping (Bool) -> Void) {
     DispatchQueue.main.async {
         let rootViewController = UIApplication.shared.windows.last?.rootViewController
         
@@ -505,6 +506,7 @@ public func showAlert(title: String, message: String, showOk: Bool, showTryAgain
             let customErrorView = CustomErrorView(
                 title: title,
                 message: message,
+                solutionText: solutionText,
                 onDismiss: {
                     // Called when tapped outside
                     completion(false)

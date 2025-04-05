@@ -5,7 +5,7 @@
 
 <div align="center">
   <h1><b>StikJIT</b></h1>
-  <p><i> A on-device JIT enabler for iOS versions 17.4+ (excluding iOS 18.4 beta 1), powered by <a href="https://github.com/jkcoxson/idevice">idevice</a> </i></p>
+  <p><i> An on-device JIT enabler for iOS versions 17.4+ (excluding iOS 18.4 beta 1), powered by <a href="https://github.com/jkcoxson/idevice">idevice</a> </i></p>
 </div>
 <h6 align="center">
 

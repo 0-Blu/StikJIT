@@ -3,6 +3,7 @@ import SwiftUI
 struct CustomErrorView: View {
     var title: String
     var message: String
+    var solutionText: String? = nil
     var onDismiss: () -> Void
     var showButton: Bool = true
     @State private var opacity: Double = 0
@@ -68,13 +69,24 @@ struct CustomErrorView: View {
                     .padding(.horizontal, 12)
                 
                 // Message 
-                Text(message)
-                    .font(.system(size: 15, design: .rounded))
-                    .foregroundColor(colorScheme == .dark ? .white.opacity(0.9) : .black.opacity(0.9))
-                    .multilineTextAlignment(.center)
-                    .fixedSize(horizontal: false, vertical: true)
-                    .padding(.horizontal, 12)
-                
+                VStack(spacing: 8) {
+                    Text(message)
+                        .font(.system(size: 15, design: .rounded))
+                        .foregroundColor(colorScheme == .dark ? .white.opacity(0.9) : .black.opacity(0.9))
+                        .multilineTextAlignment(.center)
+                        .fixedSize(horizontal: false, vertical: true)
+                    
+                    // Solution text with underline
+                    if let solution = solutionText {
+                        Text(solution)
+                            .font(.system(size: 15, design: .rounded))
+                            .foregroundColor(colorScheme == .dark ? .white : .blue)
+                            .multilineTextAlignment(.center)
+                            .underline()
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                }
+                .padding(.horizontal, 12)
                 
                 // Dismiss button (only shown when showButton is true)
                 if showButton {
