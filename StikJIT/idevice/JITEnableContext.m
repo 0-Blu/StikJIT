@@ -133,6 +133,19 @@ JITEnableContext* sharedJITContext = nil;
                      [self createCLogger:logger]) == 0;
 }
 
+- (BOOL)debugAppWithPID:(int)pid logger:(LogFunc)logger {
+    if (!provider) {
+        if (logger) {
+            logger(@"Provider not initialized!");
+        }
+        NSLog(@"Provider not initialized!");
+        return NO;
+    }
+    return debug_app_pid(provider,
+                     pid,
+                     [self createCLogger:logger]) == 0;
+}
+
 - (NSDictionary<NSString*, NSString*>*)getAppListWithError:(NSError**)error {
     if (!provider) {
         NSLog(@"Provider not initialized!");

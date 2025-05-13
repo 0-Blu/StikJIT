@@ -347,7 +347,8 @@ struct HeartbeatApp: App {
                                         show_alert = false
                                     },
                                     showButton: true,
-                                    primaryButtonText: "OK"
+                                    primaryButtonText: "OK",
+                                    messageType: .error
                                 )
                             }
                         }
@@ -370,21 +371,22 @@ struct HeartbeatApp: App {
     }
     
     func startProxy(callback: @escaping (Bool, Int?) -> Void) {
-        let port = 51820
-        let bindAddr = "127.0.0.1:\(port)"
-        
-        DispatchQueue.global(qos: .background).async {
-            let result = start_emotional_damage(bindAddr)
-            DispatchQueue.main.async {
-                if result == 0 {
-                    print("DEBUG: em_proxy started successfully on port \(port)")
-                    callback(true, nil)
-                } else {
-                    print("DEBUG: Failed to start em_proxy")
-                    callback(false, Int(result))
-                }
-            }
-        }
+//        let port = 51820
+//        let bindAddr = "127.0.0.1:\(port)"
+//        
+//        DispatchQueue.global(qos: .background).async {
+//            let result = start_emotional_damage(bindAddr)
+//            DispatchQueue.main.async {
+//                if result == 0 {
+//                    print("DEBUG: em_proxy started successfully on port \(port)")
+//                    callback(true, nil)
+//                } else {
+//                    print("DEBUG: Failed to start em_proxy")
+//                    callback(false, Int(result))
+//                }
+//            }
+//        }
+        callback(true, nil)
     }
     
     private func checkVPNConnection(callback: @escaping (Bool, String?) -> Void) {
@@ -666,7 +668,7 @@ struct LoadingView: View {
     }
 }
 
-public func showAlert(title: String, message: String, showOk: Bool, showTryAgain: Bool = false, primaryButtonText: String? = nil, completion: @escaping (Bool) -> Void) {
+public func showAlert(title: String, message: String, showOk: Bool, showTryAgain: Bool = false, primaryButtonText: String? = nil, messageType: MessageType = .error, completion: @escaping (Bool) -> Void) {
     DispatchQueue.main.async {
         let rootViewController = UIApplication.shared.windows.last?.rootViewController
         
@@ -682,7 +684,8 @@ public func showAlert(title: String, message: String, showOk: Bool, showTryAgain
                 primaryButtonText: primaryButtonText ?? "Try Again",
                 onPrimaryButtonTap: {
                     completion(true)
-                }
+                },
+                messageType: messageType
             )
             let hostingController = UIHostingController(rootView: customErrorView)
             hostingController.modalPresentationStyle = .overFullScreen
@@ -702,7 +705,8 @@ public func showAlert(title: String, message: String, showOk: Bool, showTryAgain
                 onPrimaryButtonTap: {
                     rootViewController?.presentedViewController?.dismiss(animated: true)
                     completion(true)
-                }
+                },
+                messageType: messageType
             )
             let hostingController = UIHostingController(rootView: customErrorView)
             hostingController.modalPresentationStyle = .overFullScreen
@@ -717,7 +721,8 @@ public func showAlert(title: String, message: String, showOk: Bool, showTryAgain
                     rootViewController?.presentedViewController?.dismiss(animated: true)
                     completion(false)
                 },
-                showButton: false
+                showButton: false,
+                messageType: messageType
             )
             let hostingController = UIHostingController(rootView: customErrorView)
             hostingController.modalPresentationStyle = .overFullScreen

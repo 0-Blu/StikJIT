@@ -7,6 +7,12 @@
 
 import SwiftUI
 
+public enum MessageType {
+    case error
+    case success
+    case info
+}
+
 struct CustomErrorView: View {
     var title: String
     var message: String
@@ -19,7 +25,7 @@ struct CustomErrorView: View {
     var onPrimaryButtonTap: (() -> Void)? = nil
     var onSecondaryButtonTap: (() -> Void)? = nil
     var showSecondaryButton: Bool = false
-    var messageType: MessageType = .error
+    var messageType: MessageType
     
     @Environment(\.colorScheme) private var colorScheme
     @AppStorage("customAccentColor") private var customAccentColorHex: String = ""
@@ -32,11 +38,6 @@ struct CustomErrorView: View {
         }
     }
     
-    enum MessageType {
-        case error
-        case success
-        case info
-    }
     
     var body: some View {
         ZStack {
